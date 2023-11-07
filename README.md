@@ -27,6 +27,10 @@
 #### Loose Coupling:
 Dependency injection reduces the tight coupling between classes by ensuring that a class doesn't directly instantiate its dependencies. This makes the code more flexible and easier to change because it allows you to swap out or modify dependencies without affecting the class that relies on them.
 
+<div align="center">
+     <img src="https://logicmojo.com/assets/dist/new_pages/images/couplingjava.png" alt="Image Alt Text">
+</div>
+
 #### Modularity:
 DI promotes the modularity of code, making it easier to understand and maintain. Each class focuses on its primary responsibility, and dependencies are handled separately. This leads to a cleaner and more organized codebase.
 
