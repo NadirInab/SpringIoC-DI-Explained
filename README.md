@@ -48,3 +48,77 @@ In unit testing, it's often essential to isolate the behavior of a specific clas
 ### What is Inversion of Control (IoC):
 In traditional programming, developers have control over the flow of the application. They create and manage objects, and the application follows the logic written by the developer.
 IoC is a paradigm shift where control over the application's flow is inverted. Instead of developers controlling the creation and management of objects, this control is handed over to a framework or container.
+
+### Types of Dependency Injection :
+#### Constructor Injection
+##### Constructor injection involves injecting dependencies through the constructor of a class. It is considered a robust and preferred way of injecting dependencies, as it ensures that a class instance is fully initialized when it is created.
+
+```bash
+
+public class UserService {
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+}
+
+```
+
+### Setter Injection
+#### Setter injection involves injecting dependencies through setter methods. This provides flexibility and allows changing dependencies at runtime.
+
+```bash
+
+public class ProductService {
+    private ProductRepository productRepository;
+
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+}
+
+```
+
+### Field injection
+#### It involves injecting dependencies directly into fields of a class 
+
+```bash
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderService {
+    
+    @Autowired
+    private PaymentService paymentService;
+}
+
+
+```
+
+### Dependency Injection in Spring Configuration:
+In a Spring application, dependencies are often configured in the Spring configuration files (XML or Java-based) or through annotations. let's check the following example : 
+
+```bash
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public UserService userService(UserRepository userRepository) {
+        return new UserService(userRepository);
+    }
+
+    @Bean
+    public ProductService productService(ProductRepository productRepository) {
+        ProductService productService = new ProductService();
+        productService.setProductRepository(productRepository);
+        return productService;
+    }
+
+}
+
+
+```
