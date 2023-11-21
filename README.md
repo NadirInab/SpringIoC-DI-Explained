@@ -52,7 +52,7 @@ Decoupled modules are easier to maintain, as alterations or enhancements to one 
 
 ---
 
-- **Testability: ** 
+- **Testability:** 
 
 Facilitating isolation of behavior for unit testing.
 
@@ -71,7 +71,7 @@ IoC is a paradigm shift where control over the application's flow is inverted. I
 #### Constructor Injection
 ##### Constructor injection involves injecting dependencies through the constructor of a class. It is considered a robust and preferred way of injecting dependencies, as it ensures that a class instance is fully initialized when it is created.
 
-```bash
+```java
 
 public class UserService {
     private final UserRepository userRepository;
@@ -86,7 +86,7 @@ public class UserService {
 ### Setter Injection
 #### Setter injection involves injecting dependencies through setter methods. This provides flexibility and allows changing dependencies at runtime.
 
-```bash
+```java
 
 public class ProductService {
     private ProductRepository productRepository;
@@ -101,7 +101,7 @@ public class ProductService {
 ### Field injection
 #### It involves injecting dependencies directly into fields of a class 
 
-```bash
+```java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
