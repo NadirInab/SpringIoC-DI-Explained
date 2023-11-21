@@ -33,6 +33,18 @@
 
 - dependency injection refers to the process of providing the required dependencies (objects or services) that a class or component needs to function correctly, rather than letting the class create those dependencies itself. 
 - These dependencies are typically passed to the class from an external source, such as a configuration file, a framework, or another class responsible for managing the dependencies
+#### Tight Coupling:
+- Definition: Tight coupling refers to a situation where classes or components are highly dependent on each other's concrete implementations.
+Example: Directly instantiating objects or referencing concrete classes within another class.
+#### Loose Coupling:
+- Definition: Loose coupling refers to reducing dependencies between components by relying on abstractions, interfaces, or dependency injection.
+Example: Using interfaces, abstractions, or DI containers to decouple components.
+<div>
+    <img align="center" src="https://cdn.discordapp.com/attachments/892131953808130079/1176409489243656222/image.png?ex=656ec3b6&is=655c4eb6&hm=cd4719680c0f472ada200d8ea839d118ce5d9bc5bef0614aabad2285cd3470ef&"></img>
+</div>
+
+
+## If we needed to change/replace ClassB with ClassC because ClassC has an optimized version of the calculate() method, we need to recompile ClassA because we don't have a way to change that dependency, it's hardcoded inside of ClassA.
 
 #### Here are some keys aspect of why DI is very importatnt 💯 : 
 
@@ -55,6 +67,62 @@ Decoupled modules are easier to maintain, as alterations or enhancements to one 
 - **Testability:** 
 
 Facilitating isolation of behavior for unit testing.
+#### Without Dependency Injection:
+```java 
+public class UserService {
+    private final UserRepository userRepository;
+
+    public UserService() {
+        this.userRepository = new UserRepository(); // Direct instantiation
+    }
+
+    public String getUserFullName(int userId) {
+        User user = userRepository.getUserById(userId);
+        return user != null ? user.getFullName() : "User not found";
+    }
+}
+```
+Without DI, testing becomes difficult due to direct instantiation of UserRepository
+```java
+public class UserServiceTestWithoutDI {
+    @Test
+    public void testGetUserFullName() {
+        UserService userService = new UserService();
+        String fullName = userService.getUserFullName(1);
+        // ...
+    }
+}
+```
+#### With Dependency Injection:
+```java 
+public class UserService {
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository; // Dependency injection through constructor
+    }
+
+    public String getUserFullName(int userId) {
+        User user = userRepository.getUserById(userId);
+        return user != null ? user.getFullName() : "User not found";
+    }
+}
+
+```
+```java 
+public class UserServiceTestWithDI {
+    @Test
+    public void testGetUserFullName() {
+        // With DI, we can inject a mock or fake UserRepository for testing
+        UserRepository mockRepository = Mockito.mock(UserRepository.class);
+        User user = new User(1, "John Doe");
+        Mockito.when(mockRepository.getUserById(1)).thenReturn(user);
+        UserService userService = new UserService(mockRepository);
+        String fullName = userService.getUserFullName(1);
+        assertEquals("John Doe", fullName);
+    }
+}
+```
 
 ---
 
